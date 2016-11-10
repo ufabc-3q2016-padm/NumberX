@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_progress"
+            android:icon="@drawable/progressarrow"
+            android:title="Progresso" />
+        <item
+            android:id="@+id/nav_notebook"
+            android:icon="@drawable/notebook"
+            android:title="Caderno" />
+        <item
+            android:id="@+id/nav_calculator"
+            android:icon="@drawable/calculator"
+            android:title="Calculadora" />
+
+    </group>
+
+    <item android:title="dsadasd">
+        <menu>
+            <item
+                android:id="@+id/nav_adjust"
+                android:icon="@drawable/adjust"
+                android:title="Ajustes"
+                />
+        </menu>
+    </item>
+
+</menu>
