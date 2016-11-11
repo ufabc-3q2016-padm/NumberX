@@ -1,5 +1,6 @@
 package br.edu.ufabc.padm.numberx;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -75,6 +76,9 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_progress) {
             // Handle the camera action
         } else if (id == R.id.nav_notebook) {
+            startActivity((new Intent(this, CadernoActivity.class)));
+
+            return true;
 
         } else if (id == R.id.nav_calculator) {
 
