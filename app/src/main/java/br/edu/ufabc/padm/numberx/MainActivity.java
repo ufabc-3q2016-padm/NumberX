@@ -1,5 +1,6 @@
 package br.edu.ufabc.padm.numberx;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -61,6 +62,11 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.action_calculator) {
+            Intent intent = new Intent(this, Editor.class);
+            intent.putExtra("editMode", true);
+            startActivity(intent);
+            return  true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -77,6 +83,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_notebook) {
 
         } else if (id == R.id.nav_calculator) {
+            Intent intent = new Intent(this, Editor.class);
+            intent.putExtra("editMode", true);
+            startActivity(intent);
 
         } else if (id == R.id.nav_adjust) {
 
