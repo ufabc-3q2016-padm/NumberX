@@ -18,8 +18,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CadernoActivity" />
-        <activity android:name=".RascunhoAdapter"></activity>
+        <activity android:name=".CadernoActivity"
+            android:label="@string/title_cadernoactivity"
+            />
+        <activity android:name=".EscolhaDeFaseActivity"
+            android:label="@string/title_escolhadefase"
+            ></activity>
     </application>
 
 </manifest>

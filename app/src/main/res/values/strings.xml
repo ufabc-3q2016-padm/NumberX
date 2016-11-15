@@ -7,4 +7,6 @@
     <string name="action_settings">Settings</string>
     <string name="icon_calculator_name">Calculadora</string>
     <string name="icon_return">Return</string>
+    <string name="title_cadernoactivity">Caderno</string>
+    <string name="title_escolhadefase">Escolha de fase</string>
 </resources>

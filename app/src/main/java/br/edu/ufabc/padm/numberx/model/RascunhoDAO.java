@@ -21,15 +21,15 @@ public class RascunhoDAO {
 
         c = new Rascunho();
 
-        c.setTitulo("Sistemas lineares");
-        c.setDescricao("Atividade sobre sistemas lineares");
+        c.setTitulo("Sistema");
+        c.setDescricao("Sistema da aula de ontem.");
         c.setPostDate("21/02/2016");
 
         rascunhos.add(c);
 
         c = new Rascunho();
-        c.setTitulo("Matrizes");
-        c.setDescricao("Atividade sobre matrizes");
+        c.setTitulo("Matriz");
+        c.setDescricao("Matriz 4x4 que preciso escalonar");
         c.setPostDate("12/04/2016");
 
         rascunhos.add(c);

@@ -9,20 +9,20 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-public class CadernoActivity extends AppCompatActivity {
+public class EscolhaDeFaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_caderno);
-        populateRascunhos();
+        setContentView(R.layout.activity_escolha_de_fase);
+        populateFases();
     }
 
-    private void populateRascunhos() {
-        final ListView listView = (ListView)findViewById(R.id.list_rascunhos);
+    private void populateFases() {
+        final ListView listView = (ListView)findViewById(R.id.list_fases);
 
 
-        listView.setAdapter(new RascunhoAdapter(this));
+        listView.setAdapter(new FaseAdapter(this));
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -30,10 +30,10 @@ public class CadernoActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-                //Intent intent = new Intent(this, Editor.class);
-                //intent.putExtra("editMode", true);
-                //startActivity(intent);
+                //Intent intent = new Intent(parent.getContext(), Calculadora.class);
 
+                //intent.putExtra("contactPosition", position);
+                //startActivity(intent);
             }
         });
 
@@ -44,7 +44,7 @@ public class CadernoActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.caderno_activity_menu, menu);
+        getMenuInflater().inflate(R.menu.escolhadefase_activity_menu, menu);
         return true;
     }
 
@@ -67,3 +67,5 @@ public class CadernoActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+
+

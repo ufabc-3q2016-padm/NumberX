@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -23,6 +25,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        populateModulos();
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -43,6 +47,27 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+    }
+
+    private void populateModulos() {
+        final ListView listView = (ListView)findViewById(R.id.list_modulos);
+
+
+        listView.setAdapter(new ModuloAdapter(this));
+
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+                Intent intent = new Intent(parent.getContext(), EscolhaDeFaseActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+
     }
 
     @Override
@@ -74,7 +99,10 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_progress) {
-            // Handle the camera action
+            startActivity((new Intent(this, EscolhaDeFaseActivity.class)));
+
+            return true;
+
         } else if (id == R.id.nav_notebook) {
             startActivity((new Intent(this, CadernoActivity.class)));
 
