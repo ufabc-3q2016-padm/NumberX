@@ -18,12 +18,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CadernoActivity"
-            android:label="@string/title_cadernoactivity"
-            />
-        <activity android:name=".EscolhaDeFaseActivity"
-            android:label="@string/title_escolhadefase"
-            ></activity>
+        <activity
+            android:name=".CadernoActivity"
+            android:label="@string/title_cadernoactivity" />
+        <activity
+            android:name=".EscolhaDeFaseActivity"
+            android:label="@string/title_escolhadefase" />
+        <activity
+            android:name=".Exercicio"
+            android:label="@string/title_activity_exercicio"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

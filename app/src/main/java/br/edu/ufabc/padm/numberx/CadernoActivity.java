@@ -30,9 +30,9 @@ public class CadernoActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-                //Intent intent = new Intent(this, Editor.class);
-                //intent.putExtra("editMode", true);
-                //startActivity(intent);
+                Intent intent = new Intent(this, Editor.class);
+                intent.putExtra("editMode", true);
+                startActivity(intent);
 
             }
         });

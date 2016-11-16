@@ -30,10 +30,9 @@ public class EscolhaDeFaseActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-                //Intent intent = new Intent(parent.getContext(), Calculadora.class);
+                Intent intent = new Intent(parent.getContext(), Exercicio.class);
 
-                //intent.putExtra("contactPosition", position);
-                //startActivity(intent);
+                startActivity(intent);
             }
         });
 
