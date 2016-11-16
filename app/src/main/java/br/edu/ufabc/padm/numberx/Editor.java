@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -19,17 +20,14 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.roughike.bottombar.BottomBar;
 
 public class Editor extends AppCompatActivity {
-    private BottomBar bottomBar;
+    private String title;
+    private Toolbar bottomToolbar;
     private FloatingActionButton fab;
     private AlertDialog.Builder editBuilder;
     private View dialogView;
     private AlertDialog dialogEdit;
-    private String title;
     private Activity activity;
 
     @Override
@@ -58,6 +56,36 @@ public class Editor extends AppCompatActivity {
         setupTitleDialog();
         
         setupBoard();
+    }
+
+    private void showNumberPicker() {
+        BottomSheetDialog numberPicker = new BottomSheetDialog(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View pickerView = inflater.inflate(R.layout.number_picker, null);
+        numberPicker.setContentView(pickerView);
+        numberPicker.show();
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
+    }
+
+    private void showSymbolPicker(int page) {
+        BottomSheetDialog symbolPicker = new BottomSheetDialog(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View pickerView = null;
+        switch (page) {
+            case 0: {
+                pickerView = inflater.inflate(R.layout.alphabet_symbol_picker, null);
+                break;
+            }case 1: {
+                pickerView = inflater.inflate(R.layout.greek_alphabet_symbol_picker, null);
+                break;
+            }case 2: {
+                pickerView = inflater.inflate(R.layout.non_alpabetic_symbol_picker, null);
+                break;
+            }
+        }
+        symbolPicker.setContentView(pickerView);
+        symbolPicker.show();
     }
 
     /**
@@ -101,28 +129,40 @@ public class Editor extends AppCompatActivity {
      * false for notebook files.
      */
     private void editMode(boolean edit) {
-        bottomBar  = (BottomBar) findViewById(R.id.bottomBar);
+        bottomToolbar  = (Toolbar) findViewById(R.id.bottomToolbar);
         if (edit) {
             //Calculator mode
             showEditActionBar(true);
-            bottomBar.setVisibility(View.VISIBLE);
+            //Setup listeners for the Bottom Bar:
+            ((Button) findViewById(R.id.numeric_keyboard)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) { showNumberPicker(); }
+            });
+            ((Button) findViewById(R.id.x_alphabet_picker_button)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) { showSymbolPicker(0); }
+            });
+            ((Button) findViewById(R.id.alpha_greek_picker_button)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) { showSymbolPicker(1); }
+            });
+            ((Button) findViewById(R.id.equality_non_alphabetic_picker_button)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) { showSymbolPicker(2); }
+            });
+            ((Button) findViewById(R.id.minus_one_non_alphabetic_picker_button)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) { showSymbolPicker(2); }
+            });
+
+            bottomToolbar.setVisibility(View.VISIBLE);
             fab.hide();
         } else {
             //Viewer mode
             showEditActionBar(false);
-            bottomBar.setVisibility(View.GONE);
+            bottomToolbar.setVisibility(View.GONE);
             fab.show();
         }
-    }
-
-    /**
-     * Setup the webview to display the math Board, using html/css/js
-     */
-    private void setupBoard() {
-        WebView board = (WebView) findViewById(R.id.Board);
-        board.getSettings().setJavaScriptEnabled(true);
-        board.loadUrl(getString(R.string.board_url));
-
     }
 
     /**
@@ -172,6 +212,22 @@ public class Editor extends AppCompatActivity {
             actionBar.setDisplayShowCustomEnabled(true);
             actionBar.setCustomView(v);
         }
+    }
+
+    /**
+     * Setup the webview to display the math Board, using html/css/js
+     */
+    private void setupBoard() {
+        WebView board = (WebView) findViewById(R.id.Board);
+        board.getSettings().setJavaScriptEnabled(true);
+        board.loadUrl(getString(R.string.board_url));
+        board.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                showNumberPicker();
+                return true;
+            }
+        });
     }
 
     @Override
