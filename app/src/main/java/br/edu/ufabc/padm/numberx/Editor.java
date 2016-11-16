@@ -1,6 +1,8 @@
 package br.edu.ufabc.padm.numberx;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipDescription;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -10,16 +12,19 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.MimeTypeMap;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Editor extends AppCompatActivity {
     private String title;
@@ -155,6 +160,8 @@ public class Editor extends AppCompatActivity {
                 public void onClick(View view) { showSymbolPicker(2); }
             });
 
+            setupDrag();
+
             bottomToolbar.setVisibility(View.VISIBLE);
             fab.hide();
         } else {
@@ -163,6 +170,50 @@ public class Editor extends AppCompatActivity {
             bottomToolbar.setVisibility(View.GONE);
             fab.show();
         }
+    }
+
+    private  void setupDrag() {
+        ((Button) findViewById(R.id.x_alphabet_picker_button)).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                ClipData data = ClipData.newPlainText("", "");
+                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
+                        view);
+                view.startDrag(data, shadowBuilder, view, 0);
+                return true;
+            }
+        });
+        ((Button) findViewById(R.id.alpha_greek_picker_button)).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                ClipData data = ClipData.newPlainText("", "");
+                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
+                        view);
+                view.startDrag(data, shadowBuilder, view, 0);
+                return true;
+            }
+        });
+        ((Button) findViewById(R.id.equality_non_alphabetic_picker_button)).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                ClipData data = ClipData.newPlainText("", "");
+                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
+                        view);
+                view.startDrag(data, shadowBuilder, view, 0);
+                return true;
+            }
+        });
+        ((Button) findViewById(R.id.minus_one_non_alphabetic_picker_button)).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                ClipData data = ClipData.newPlainText("", "");
+                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
+                        view);
+                view.startDrag(data, shadowBuilder, view, 0);
+                return true;
+            }
+        });
+
     }
 
     /**
@@ -225,6 +276,14 @@ public class Editor extends AppCompatActivity {
             @Override
             public boolean onLongClick(View view) {
                 showNumberPicker();
+                return true;
+            }
+        });
+        board.setOnDragListener(new View.OnDragListener() {
+            @Override
+            public boolean onDrag(View view, DragEvent dragEvent) {
+                if (dragEvent.getAction() == DragEvent.ACTION_DROP)
+                    Toast.makeText(Editor.this, "TODO: Drag and drop symbols",Toast.LENGTH_LONG).show();
                 return true;
             }
         });
