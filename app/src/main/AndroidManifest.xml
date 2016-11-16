@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.edu.ufabc.padm.numberx">
-    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -26,6 +26,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <activity
+            android:name=".CadernoActivity"
+            android:label="@string/title_cadernoactivity" />
+        <activity
+            android:name=".EscolhaDeFaseActivity"
+            android:label="@string/title_escolhadefase" />
+        <activity
+            android:name=".Exercicio"
+            android:label="@string/title_activity_exercicio"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
