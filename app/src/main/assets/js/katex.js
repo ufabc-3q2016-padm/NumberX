@@ -4577,8 +4577,8 @@ function Symbol(value, context) {
     this.has_span = false;
     this.value = value;
     this.class = null;
-    this.equation = context;
-    context.symbols.push(this);
+    this.term = context;
+    context.equation.symbols.push(this);
     Symbol.symbols.push(this);
     this.id = Symbol.symbols.length - 1;
 }
