@@ -22,11 +22,14 @@ var Symbol = domTree.Symbol;
 /**
  * Parse and build an expression, and place that expression in the DOM node
  * given.
+ * NUMBER X: Context object for a symbol
  */
-var render = function(expression, baseNode, options) {
+var render = function(expression, baseNode, context, options) {
     utils.clearNode(baseNode);
 
     var settings = new Settings(options);
+    
+    Symbol.Context = context;
 
     var tree = parseTree(expression, settings);
     var node = buildTree(tree, expression, settings).toNode();
@@ -4572,6 +4575,8 @@ module.exports = {
 var unicodeRegexes = require("./unicodeRegexes");
 var utils = require("./utils");
 
+//NUMBER X FORK CONSTRUCTOR:
+    
 function Symbol(value, context) {
     //console.log(context);
     this.has_span = false;
@@ -4583,8 +4588,11 @@ function Symbol(value, context) {
     this.id = Symbol.symbols.length - 1;
 }
 
+Symbol.Context;
 Symbol.symbols = [];
 Symbol.spans = [];
+    
+//***
 
 /**
  * Create an HTML className based on a list of classes. In addition to joining
@@ -4817,12 +4825,15 @@ symbolNode.prototype.toNode = function() {
     if (span) {
         span.appendChild(node);
         span.setAttribute('data-id', this.value);
+        //NUMBER X FORK CODE:
+        if (Symbol.Context instanceof Term)
+            span.context = Symbol.Context;
+            //span.setAttribute('id', Symbol.Context.id);
         Symbol.spans.push(span);
-        //setSymbolId(this.id, this.value);
+        //***
         return span;
     } else {
         //Symbol.spans.push(node);
-        //setSymbolId(this.id, this.value);
         return node;
     }
 };

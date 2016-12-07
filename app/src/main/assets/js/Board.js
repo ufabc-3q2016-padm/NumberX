@@ -1,35 +1,66 @@
 
 var Symbol = katex.Symbol;
 
-function giveIds(equation) {
-    //Procurar por elementos compostos
-    var digits;
-    for (var i = 0; i < equation.spans.length; i++) {
-        for (var j = 0; j < equation.symbols.length; j++) {
-            digits = equation.symbols[j].value.toString().length;
-            if (digits > 1) {
-                if (equation.symbols[j].has_span == false && equation.spans[i].getAttribute('data-id') == equation.symbols[j].value.toString().charAt(0)) {
-                    equation.symbols[j].has_span = true;
-                    for (k = 0; k < digits; k++) {
-                        var m = i + k;
-                        equation.spans[m].setAttribute('id', equation.symbols[j].id);
-                        equation.spans[m].setAttribute('data-id', equation.spans[i].getAttribute('data-id') + " from " + equation.symbols[j].value);
-                    }
-                }
-            }
-        }
+//Long press logic (adapted from: http://jsfiddle.net/kelunik/pkjze6e6/42/)
+var longpress = false;
+var presstimer = null;
+var longtarget = null;
+var sortMoving = false;
+
+var cancel = function(e) {
+    if (presstimer !== null) {
+        clearTimeout(presstimer);
+        presstimer = null;
     }
-    //Procurar demais elementos
-    for (var i = 0; i < equation.spans.length; i++) {
-        for (var j = 0; j < equation.symbols.length; j++) {
-            if (equation.symbols[j].has_span == false && equation.spans[i].getAttribute('data-id') == equation.symbols[j].value) {
-                equation.symbols[j].has_span = true;
-                equation.spans[i].setAttribute('id', equation.symbols[j].id);
-                break;
-            }
-        }
+    if (this.classList != null)
+        this.classList.remove("longpress");
+    sortMoving = false;
+    
+};
+
+var click = function(e) {
+    if (presstimer !== null) {
+        clearTimeout(presstimer);
+        presstimer = null;
     }
-    resetSpans(equation);
+    
+    this.classList.remove("longpress");
+    
+    if (longpress) {
+        return false;
+    }
+    
+    alert("press");
+};
+
+var start = function(e) {
+    //console.log(e);
+    
+    if (e.type === "click" && e.button !== 0) {
+        return;
+    }
+    
+    longpress = false;
+    
+    this.classList.add("longpress");
+    
+    presstimer = setTimeout(function() {
+        onLongPress(e);
+        longpress = true;
+    }, 1000);
+    
+    return false;
+};
+//End of long press code
+var onMoveCancel =  function(e) {
+    //console.log(sortMoving);
+    if (sortMoving) {
+        cancel(e);
+    }
+}
+
+function decPlaces(num) {
+  return (num.toString().split('.')[1] || []).length;
 }
 
 function resetSpans(equation) {
@@ -41,90 +72,194 @@ function resetSpans(equation) {
     }
 }
 
-function getEquationBySymbolId(id) {
-    if (Symbol.symbols[id] != undefined)
-        return Symbol.symbols[id].term.equation;
-    else
-        return null;
-}
-
-function getTermBySymbolId(id) {
-    if (Symbol.symbols[id] != undefined)
-        return Symbol.symbols[id].term;
-    else
-        return null;
-}
-
 //Term constructor
 function Term(value, variable, index, degree, context) {
+    var term = this;
+    this.id;
     this.equation = context;
     this.coeficient = new Symbol(value, this);
     this.variable = new Symbol(variable, this);
     this.index = new Symbol(index, this);
     this.degree = new Symbol(degree, this);
+    this.element;
     this.beforeEquality = true;
+    this.isSimilar = function(term2) {
+        if (term2 instanceof Term && term2 !== term)
+            return (term.variable.value === term2.variable.value && term.index.value === term2.index.value && term.degree.value === term2.degree.value);
+    }
+    this.copy = function(newContext) {
+        var copy = new Term(term.coeficient.value, term.variable.value, term.index.value, term.degree.value, newContext);
+        copy.beforeEquality = term.beforeEquality;
+        return copy;
+    }
 }
 
 Term.prototype.toString = function() {
-    var label;
+    var label = "";
     if (this.degree.value > 0) {
-        label = this.coeficient.value + this.variable.value + "_" + this.index.value; //+ "^" + this.degree.value;
+        if (this.coeficient.value != 1) { //For coeficient 1, do not show it
+            //Format: do not show more than 3 decimals, and show it only when needed
+            if (decPlaces(this.coeficient.value) < 4)
+                label = this.coeficient.value;
+            else
+                label = this.coeficient.value.toPrecision(3);
+        }
+        label += this.variable.value + "_" + this.index.value; //+ "^" + this.degree.value;
     } else {
         label = this.coeficient.value.toString();
     }
     return label;
 };
 
+//Equality constructor
+function Equality(context) {
+    this.context = context;
+    this.value = "=";
+    this.element;
+    context.equality = this;
+}
+
+Equality.prototype.toString = function() {
+    return this.value;
+}
+
 //Equation constructor
-function Equation() {
+function Equation(context) {
     var equation = this;
     var equationList;
-    this.terms = {};
-    this.current = Object.keys(this.terms).map(function(key) {return this.terms[key];});
+    this.system = context;
+    this.id;
+    this.equationList;
+    this.terms;
+    this.current;
+    this.equality;
     this.sortable;
     this.symbols = [];
     this.spans = [];
-    this.addTerm = function(term) { this.terms.push(term); };
-    this.multiplyBy = function(constant) {
-        for (t in this.terms) {
-            if (this.terms[t] instanceof Term)
-                this.terms[t].coeficient.value *= constant;
-        }
-        this.update();
+    this.addTerm = function(term) { 
+        if (term.beforeEquality)
+            this.current.unshift(term);
+        else
+            this.current.push(term);
     };
+    this.setTerms = function(terms) {
+        this.terms = terms;
+        this.current = terms;
+    }
+    this.multiplyBy = function(constant) {
+        for (t in this.current) {
+            if (equation.current[t] instanceof Term)
+                equation.current[t].coeficient.value *= constant;
+        }
+        equation.update();
+    };
+    this.sum = function(dragged, target) {
+        var id = dragged.element.id;
+        if (dragged.equation == target.equation) {
+            if (dragged.variable.value == target.variable.value && dragged.index.value == target.index.value && dragged.degree.value == target.degree.value) {
+                target.coeficient.value += dragged.coeficient.value;
+                dragged.element.parentElement.removeChild(dragged.element);
+                dragged.equation.current[id] =  undefined;
+                //delete dragged.equation.current[dragged.equation.current.indexOf(dragged)];
+                delete dragged;
+                
+                //Se o termo resultante for nulo, elimine-o
+                /*
+                if (target.coeficient.value == 0) {
+                    target.element.parentElement.removeChild(target.element);
+                    delete target.equation.terms[id];
+                    delete target;
+                }
+                */
+                target.equation.update();
+            } else
+                console.log("Termos nao podem ser somados!");
+        }
+    };
+    this.reduce = function() {
+        for (t in equation.current) {
+            var term = equation.current[t];
+            var similars;
+            if (term instanceof Term) {
+                similars = equation.current.filter(term.isSimilar);
+                for (s in similars) {
+                    if (term.beforeEquality !== similars[s].beforeEquality)
+                        term.coeficient.value *= -1;
+                    equation.sum(term, similars[s]);
+                }
+            }
+        }
+        equation.update();
+    }
     //Recebe um ul, e constroi uma equação drag and drop com base nos termos passados na construção
     this.setup = function(eqList) {
-        equationList = eqList;
+        var parent = eqList.parentElement;
+        var newList = document.createElement("ul");
+        parent.replaceChild(newList, eqList);
         
-        if (equation.terms.equality == undefined) {
-            equation.terms.equality = "=0";
-        }
+        equation.equationList = newList;
+        equationList = newList;
+        
+        if (equation.equality == undefined)
+            equation.current.push(new Equality(equation));
+        
         var element;
         //Cria list items para cada termo:
-        Object.keys(this.terms).forEach(function(t, i) {
+        for (t in equation.current) {
             element = document.createElement("li");
-            if (equation.terms[t] instanceof Term) {
+            if (equation.current[t] instanceof Term) {
+                
                 element.setAttribute("data-id", t);
                 element.setAttribute("id", t);
-            } else {
-                element.setAttribute("data-id", "equality");
-                element.setAttribute("id", "equality");
+                element.setAttribute("class","term");
+                
+                //Data transfer drag
+                var coeficientID = equation.current[t].coeficient.id;
+                element.setAttribute("ondragstart","onDrag(event)");
+                element.setAttribute("ondrop","dropObject(event)");
+                element.setAttribute("ondragover","allowDrop(event)");
+                
+                //Long press listeners
+                element.addEventListener("mousedown", start); //Needed to work on PC browsers
+                element.addEventListener("touchstart", start);
+                element.addEventListener("click", click);
+                element.addEventListener("mouseout", cancel);
+                element.addEventListener("touchend", cancel);
+                element.addEventListener("touchleave", cancel);
+                element.addEventListener("touchcancel", cancel);
+                element.addEventListener("touchmove", onMoveCancel);
+                element.addEventListener("drag", onMoveCancel);
+                //element.addEventListener("dragstart", onMoveCancel);
+                
+                element.context = equation.current[t];
+                equation.current[t].element = element;
+                
+            } else if (equation.current[t] instanceof Equality) {
+                element.setAttribute("data-id", t);
+                element.setAttribute("id", t);
                 element.setAttribute("class","ignore");
+                
+                equation.current[t].element = element;
+                element.context = equation.current[t];
             }
             element.style.display = "inline";
             equationList.appendChild(element);
-        });
+        }
+        
         //Transforma-os em uma lista reordenável
         this.sortable = new Sortable.create(equationList, {
-            animation: 100,
+            sort: true,
+            //animation: 100,
             filter: ".ignore",
             //Se passar pela igualdade, deve inverter o sinal
             onSort: function(evt) {
                 equation.update();
             },
             onMove: function(evt) {
-                    equation.oposite = equation.getTermById(evt.dragged.id);
-                
+                if (evt.dragged.context != null)
+                    equation.oposite = evt.dragged.context;
+                //Cancel long press withour event
+                sortMoving = true;
             },
         });
         console.log("Equation list elements: " + equationList.childElementCount);
@@ -136,8 +271,8 @@ function Equation() {
             //Antes que atualize pros termos atuais
             //console.log("Previous equation TeX: " + equation.current);
             var previousPos = equation.current.indexOf(equation.oposite);
-            var equalityPos = equation.current.indexOf(equation.terms.equality);
-            console.log(equation.equalityPos);
+            var equalityPos = equation.current.indexOf(equation.equality); 
+            //console.log(equation.equalityPos);
             if (previousPos < equalityPos)
                 equation.oposite.beforeEquality = true;
             else
@@ -146,13 +281,19 @@ function Equation() {
         
         //Atualizar termos
         var currentString = equation.sortable.toArray();
-        equation.current = currentString.map(equation.getTermById);
+        equation.current = [];
+        var i;
+        for (i = 0; i < equationList.childElementCount; i++) {
+            if (equation.equationList.children[i].context != null )
+                equation.current.push(equation.equationList.children[i].context);
+        }
+        
         console.log("Current equation TeX: " + equation.current);
         
-        //Lógica de multiplicar por -1 parte 2
+        //Lógica de multiplicar por -1, parte 2
         if (equation.oposite != null) {
             var currentPos = equation.current.indexOf(equation.oposite);
-            equalityPos = equation.current.indexOf(equation.terms.equality);
+            equalityPos = equation.current.indexOf(equation.equality);
             console.log("Previous pos: " + previousPos);
             console.log("Current pos: " + currentPos);
             if (equation.oposite.beforeEquality) {
@@ -168,41 +309,103 @@ function Equation() {
         var element;
         //Gerar código TeX para cada termo, e renderizá-lo usando KaTex
         for (var t in equation.current) {
-            element = equationList.children.namedItem(currentString[t]);
-            //console.log(element);
-            var TeX = equation.current[t].toString();
+            //element = equationList.children.namedItem(currentString[t]);
+            //console.log(element.context);
+            var TeX;
             if (equation.current[t] instanceof Term) {
+                
+                element = equation.current[t].element;
+                
+                equation.current[t].id = t;
+                console.log(equation.current);
+                var equalityPos = equation.current.indexOf(equation.equality);
+                if (t < equalityPos)
+                    equation.current[t].beforeEquality = true;
+                else
+                    equation.current[t].beforeEquality = false;
+                
+                TeX = equation.current[t].toString();
                 if (t > 0 && equation.current[t-1] instanceof Term && equation.current[t].coeficient.value >= 0)
                     TeX = "+" + TeX;
-            } else {         //equality
-                console.log(t);
+            } else if (equation.current[t] instanceof Equality) {         //equality
+                
+                element = equation.current[t].element;
+                
                 if (t == 0)
                     TeX = "0=";
-                else if (t == currentString.length-1)
+                else if (t == equation.current.length-1)
                     TeX = "=0";
                 else
                     TeX = "=";
             }
-            katex.render(TeX, element);
+            katex.render(TeX, element, equation.current[t]);
+            
+            //Create spaces
+            if (element.childElementCount < 2) {
+                var space = document.createElement("span");
+                space.style.paddingLeft = "4px";
+                space.setAttribute("id","space#" + t);
+                //space.setAttribute("class", t);
+                space.setAttribute("ondrop","dropObject(event)");
+                space.setAttribute("ondragover","allowDrop(event)");
+                space.setAttribute("ondragleave","onDragLeave(event)");
+                element.appendChild(space);
+                //console.log(space);
+            }
         }
         equation.spans = Symbol.spans;
-        giveIds(equation);
-        
-    };
-    this.getTermById = function(id) {
-        return equation.terms[id];
     };
 }
 
 //Linear System constructor
-function LinearSystem(equations) {
+function LinearSystem() {
+    var system = this;
+    this.systemList;
     this.id;
-    this.equations = equations;
+    this.equations = [];
+    this.pivots = [];
     this.sortable;
     this.add = function(equation) { this.equations.push(equation); };
     this.getEquationById = function(id) { return this.equation[id]; };
+    this.sum =  function(dragged, target) {
+        dragged.reduce();
+        target.reduce();
+        console.log("dragged " + dragged.terms);
+        console.log("dragged " + dragged.current);
+        console.log("target " + target.current);
+        
+        var toSum;
+        var term;
+        for (t in dragged.current) {
+            term = dragged.current[t];
+            if (term instanceof Term) {
+                toSum = target.current.filter(term.isSimilar);
+                if (toSum.length == 1) {
+                    console.log(toSum[0].toString() + " somar " +term.toString() + " esta " + term.beforeEquality);
+                    if (toSum[0].beforeEquality != term.beforeEquality) {
+                        toSum[0].coeficient.value -= term.coeficient.value;
+                    } else {
+                        toSum[0].coeficient.value += term.coeficient.value;
+                    }
+                    //TODO: Se o termo resultante for nulo, elimine-o
+                } else if (toSum.length == 0) {
+                    target.addTerm(term.copy(target));
+                    target.setup(target.equationList);
+                }
+            }
+        }
+        
+        target.update();
+        dragged.update();
+    }
+    this.equationSort = function(state) {
+        for (e in system.equations)
+            system.equations[e].sortable.options.sort = state;
+    };
     //Faz multiplas configurações para mostrar as equações da forma correta
-    this.setup = function() {
+    this.setup = function(equations) {
+        if (equations != undefined)
+            system.equations = equations;
         var systemContainer = document.createElement('div');
         
         //Mostrar sinal chave, simbolizando sistema de equações
@@ -221,12 +424,15 @@ function LinearSystem(equations) {
         systemList.setAttribute('style',"list-style-type: none;");
         systemList.style.padding = "10px";
         systemContainer.appendChild(systemList);
+        system.systemList = systemList;
         
         document.body.appendChild(systemContainer);
         var equationList;
         var element;
         //Para cada equação, cria um list item, e dentro dela, um ícone e um ul, onde os termos serão inseridos no setup
-        for (var e in equations) {
+        for (var e in system.equations) {
+            system.equations[e].system = system;  //Passando o contexto para a equação
+            
             element = document.createElement('li');
             element.setAttribute('data-id', e);
             element.setAttribute('id', "equation" + e);
@@ -244,12 +450,12 @@ function LinearSystem(equations) {
             equationList = document.createElement('ul');
             equationList.style.paddingLeft = "40px";
             //equationList.setAttribute('class', "ignore");
-            element.setAttribute("ondrop","dropConstant(event)");
+            element.setAttribute("ondrop","dropObject(event)");
             element.setAttribute("ondragover","allowDrop(event)");
             
             element.appendChild(equationList);
-            this.equations[e].id = e;
-            this.equations[e].setup(equationList);
+            system.equations[e].id = e;
+            system.equations[e].setup(equationList);
         }
         
         systemContainer.style.fontSize = "28px";
@@ -264,19 +470,33 @@ function LinearSystem(equations) {
 
 //Constant constructor
 function Constant(value) {
+    this.context = this;
     this.value = value;
     this.sortable;
     this.setup = function() {
         var container = document.createElement('ui');
         var constant = document.createElement('li');
+        var value;
+        
         container.style.fontSize = "28px";
         container.style.marginLeft = "6px";
         container.style.marginRight = "6px";
         container.appendChild(constant);
         document.body.appendChild(container);
-        katex.render(this.value.toString(), container);
+        
+        if (decPlaces(this.value) < 4)
+            value = this.value;
+        else
+            value = this.value.toPrecision(3);
+        katex.render(value.toString(), constant);
+        
+        constant.style.display = "inline";
+        
         this.sortable = new Sortable.create(container);
-        container.setAttribute("ondragstart","dragConstant(event," + this.value + ")");
+        
+        constant.context = this.context;
+        container.setAttribute("draggable","true");
+        container.setAttribute("ondragstart","onDrag(event)");
     };
 }
 
@@ -285,38 +505,93 @@ function createConstant(value) {
     constant.setup();
 }
 
-function dragConstant(ev, value) {
-    ev.dataTransfer.setData("value", value);
+var dragObject;
+function onDrag(ev) {
+    dragObject = ev.target.context;
 }
 
 function allowDrop(ev) {
     ev.preventDefault();
+    var space = event.target.id.split("#");
+    if (space[0] == "//space") {
+        ev.target.style.backgroundColor = "red";
+        ev.target.style.paddingLeft = "15px";
+    }
 }
 
-function dropConstant(event) {
+function onDragLeave(ev) {
+    var space = event.target.id.split("#");
+    if (space[0] == "//space") {
+        ev.target.style.backgroundColor = "";
+        ev.target.style.paddingLeft = "6px";
+    }
+}
+
+function dropObject(event) {
+    
+    if (event.stopPropagation) {
+        event.stopPropagation(); // stops the browser from redirecting.
+    }
     event.preventDefault();
-    var equation = getEquationBySymbolId(event.target.id);
-    var constant = event.dataTransfer.getData("value");
-    if (equation != null && constant != 0)
-        equation.multiplyBy(constant);
-        //alert("Should multiply: " + getEquationSymbolbyId(event.target.id).id + " by " + event.dataTransfer.getData("value"));
+    
+    if(event.target.context != null) {
         
+        var equation = event.target.context.equation;
+        if (dragObject instanceof Constant) {  //Multiply the target equation
+            var constant = dragObject.value;
+            if (constant != 0)
+                equation.multiplyBy(constant);
+        } else if (dragObject instanceof Term && !dragObject.equation.sortable.options.sort) { //Do the sum of the dragged and target terms
+            var draggedTerm = dragObject;
+            var draggedEquation = dragObject.equation;
+            var targetTerm = event.target.context;
+            var targetEquation = targetTerm.equation;
+            if (draggedEquation == targetEquation) { //Sum of two terms
+                if (targetTerm !== draggedTerm)
+                    draggedEquation.sum(draggedTerm,targetTerm);
+            } else { //Sum of two equations
+                draggedEquation.system.sum(draggedEquation,targetEquation);
+            }
+            console.log(draggedTerm);
+            console.log(targetTerm);
+        
+            //Future feature: allow using spacing for trigger permutation on bigger screens
+            var space = event.target.id.split("#");
+            if (space[0] == "space" && space[1] != draggedTermPos) {
+                console.log(eq.equationList.childNodes[space[1]]);
+            }
+            draggedTerm.element.style.backgroundColor = "";
+            //console.log("target " + targetTerm);
+        }
+        equation.system.equationSort(true);
+    }
+}
+
+function onLongPress(event) {
+    if (event.stopPropagation) {
+        event.stopPropagation(); // stops the browser from redirecting.
+    }
+    
+    event.target.context.element.style.backgroundColor = "blue";
+    var selectedEquation = event.target.context.equation;
+    
+    selectedEquation.system.equationSort(false);
     
 }
 
+
 //Dados de teste:
+var sy = new LinearSystem();
 
-var eq = new Equation();
-var eq2 = new Equation();
-var eq3 = new Equation(); 
+var eq = new Equation(sy);
+var eq2 = new Equation(sy);
+var eq3 = new Equation(sy); 
 
-eq.terms = {"0": new Term(8, "x", 0, 1, eq), "1": new Term(12, "x", 1, 1, eq), "equality": "=", "2": new Term(2, "x", 2, 0, eq)};
-eq2.terms = {"0": new Term(3, "x", 0, 1, eq2),"1": new Term(7,"x", 1, 1, eq2),"equality": "="};
-eq3.terms = {"0": new Term(55, "x", 0, 1, eq3),"1": new Term(9,"x", 2, 1, eq3),"equality": "="};
+eq.setTerms([new Term(8, "x", 0, 1, eq), new Term(12, "x", 1, 1, eq), new Equality(eq), new Term(3, "x", 1, 0, eq), new Term(2, "x", 1, 0, eq)]);
+eq2.setTerms([new Term(3, "x", 0, 1, eq2), new Term(7,"x", 1, 1, eq2), new Term(2,"x", 0, 1, eq2)]);
+eq3.setTerms([new Term(55, "x", 0, 1, eq3), new Term(9,"x", 2, 1, eq3), new Equality(eq3)]);
 
-var sy = new LinearSystem([eq, eq2, eq3]);
+sy.setup([eq, eq2, eq3]);
 
-sy.setup();
-
-createConstant(2);
-createConstant(7);
+createConstant(1/8);
+createConstant(-5);
