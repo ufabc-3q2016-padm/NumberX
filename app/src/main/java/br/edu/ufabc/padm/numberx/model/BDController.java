@@ -17,15 +17,23 @@ public class BDController {
         criaBD = new CriaBD(c);
     }
 
+    /**
+        @param mod  Recebe como argumento "Fase", "Modulo" ou "Rascunho",
+                    direcionando a query no DB.
+     */
     public Cursor carregaDados(String mod){
         Cursor cursor = null;
         String qry = null;
-        if (mod == "Fase"){
-            qry = Resources.getSystem().getString(R.string.carrega_dados_fase);
-        } else if (mod == "Modulo"){
-            qry = Resources.getSystem().getString(R.string.carrega_dados_modulo);
-        } else if (mod == "Rascunho") {
-            qry = Resources.getSystem().getString(R.string.carrega_dados_rascunho);
+        switch (mod) {
+            case "Fase":
+                qry = Resources.getSystem().getString(R.string.carrega_dados_fase);
+                break;
+            case "Modulo":
+                qry = Resources.getSystem().getString(R.string.carrega_dados_modulo);
+                break;
+            case "Rascunho":
+                qry = Resources.getSystem().getString(R.string.carrega_dados_rascunho);
+                break;
         }
 
         if (qry != null) {
