@@ -3,174 +3,174 @@
 
     <item
         is-multidex="true"
-        jar="/home/nuntius/NumberX/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/24.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.3"
-        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
-        <dex dex="/home/nuntius/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-24.2.1_ad4e6880f8f4b22b9c4552054deec22f7af9809c/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/nuntius/NumberX/app/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.1/jars/libs/internal_impl-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.3"
-        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
-        <dex dex="/home/nuntius/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_eb615d804b7174ca47c1445778efef4968f9142a/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/nuntius/NumberX/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.3"
-        sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
-        <dex dex="/home/nuntius/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-24.2.1_bd973a23d00d7769110d0cf0e17bcaeedaf7fe8c/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/nuntius/NumberX/app/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.3"
-        sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
-        <dex dex="/home/nuntius/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-fragment-24.2.1_167e516cf716a207deddfe35872e9b47da46664f/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/nuntius/NumberX/app/build/intermediates/exploded-aar/com.android.support/design/24.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.3"
-        sha1="e03f47f3d1017a093bb3239d4ec47c3447f40744">
-        <dex dex="/home/nuntius/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-24.2.1_39b3c73a6f921245dd717f91586417b0889ac65e/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/nuntius/NumberX/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/24.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.3"
-        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
-        <dex dex="/home/nuntius/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-24.2.1_99723f294eef4391d47d2191360b48507015ddf4/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/nuntius/NumberX/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.1/jars/libs/internal_impl-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.3"
-        sha1="867dad63c33388ff8c7644b236579355036d075f">
-        <dex dex="/home/nuntius/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_742b7702bcc7acd84b93db82798fcd081168f377/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/nuntius/NumberX/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.3"
-        sha1="9864999167911d99f6b49f23bad163db250e047c">
-        <dex dex="/home/nuntius/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_847853a97313b23515846ff415d58f837fb56bc5/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/nuntius/NumberX/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.1/jars/libs/internal_impl-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.3"
-        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
-        <dex dex="/home/nuntius/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_94a12c88fc65699020bbc8481ae0c3a4d50e52f9/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/nuntius/NumberX/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.3"
-        sha1="98d1fe999649c0b261ddb06c7eac576f049225e9">
-        <dex dex="/home/nuntius/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_bffba5085c7a65baa63010ad77c55a4a57a3b1b6/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/nuntius/NumberX/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.3"
-        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
-        <dex dex="/home/nuntius/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-utils-24.2.1_392de1aad2395d928be7f05be587e11b6b9bce37/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/nuntius/NumberX/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.1/jars/libs/internal_impl-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.3"
-        sha1="fbf8da429efd5ad21e02e3e5ecaa1efc4167878d">
-        <dex dex="/home/nuntius/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_49e9ce577a6bb177905271f025f859620f1b5448/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/nuntius/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/24.2.1/support-annotations-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.3"
-        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
-        <dex dex="/home/nuntius/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-24.2.1_1dd752f210ad4e81fe2c40599b9c35fdd1f9c010/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/nuntius/NumberX/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/24.2.1/jars/classes.jar"
+        jar="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/24.2.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.3"
         sha1="7521486d9bfd2cd9e756e0cf75ed7d97f2ce2d3b">
-        <dex dex="/home/nuntius/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-recyclerview-v7-24.2.1_07c2d8053d213bd37543b8fc0fb4998d9bbcfbaf/classes.dex" />
+        <dex dex="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-recyclerview-v7-24.2.1_1e0c898f1be062b2b3d24b8423ac2a432d377889/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/nuntius/NumberX/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.2.1/jars/classes.jar"
+        jar="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/24.2.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.3"
-        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="/home/nuntius/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-24.2.1_6d7c2d6b751eedb405759d0d528491dfc2326923/classes.dex" />
+        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
+        <dex dex="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-24.2.1_15e75c60177d0f562627157789bcb347e569f67f/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/nuntius/NumberX/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.3"
-        sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
-        <dex dex="/home/nuntius/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-ui-24.2.1_c870ce72cafb23af1452fdf8090a45e6b2b979a5/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/nuntius/NumberX/app/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jar="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.1/jars/libs/internal_impl-24.2.1.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.3"
         sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
-        <dex dex="/home/nuntius/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_eff8359f40a91d95b908cc39000d84c829b4b6b4/classes.dex" />
+        <dex dex="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_2dd3a72819d8862b2124db069460ac1688dfbeda/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/nuntius/NumberX/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.1/jars/classes.jar"
+        jar="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
+        <dex dex="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-ui-24.2.1_2a1c20a68145427865beae1a94f39997e0f26aa5/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
+        <dex dex="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_c8295cd297f4d773680ba98eed92891b79dc836c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="70812b31b849a957eebae192561f28828144002f">
+        <dex dex="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_1d1163b5d43ab767709128d4bde2f62d9f2b151b/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/exploded-aar/com.android.support/design/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="e03f47f3d1017a093bb3239d4ec47c3447f40744">
+        <dex dex="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-24.2.1_fe04d3922ff89f0e3fb7f7dc75580990614f0a55/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.3"
         sha1="09b462bbcb77650284bd6614f1a32f360ef369f8">
-        <dex dex="/home/nuntius/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-media-compat-24.2.1_58d6400da51be6dc5e941abde99a09c018bd97be/classes.dex" />
+        <dex dex="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-media-compat-24.2.1_6d65e09c769240870c414e835ffcda2418c6571e/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/nuntius/NumberX/app/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.1/jars/classes.jar"
+        jar="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.3"
         sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
-        <dex dex="/home/nuntius/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-compat-24.2.1_5a249ab8905a044b6973245d4cca9dccef7b9c9d/classes.dex" />
+        <dex dex="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-compat-24.2.1_e700730b13b273dddefacbff7629c4f2baafc376/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="fbf8da429efd5ad21e02e3e5ecaa1efc4167878d">
+        <dex dex="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_595759bfec849201a464fe934b1e7e4f89573e5c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adriano/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/24.2.1/support-annotations-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
+        <dex dex="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-24.2.1_b3e663eb96a04d012caf585a7c12df76378a9492/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
+        <dex dex="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-fragment-24.2.1_64062b5a8635d02469a20a4fc4669f21d7a18c1a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
+        <dex dex="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_12934a69aada18dcd7435d9bfa5f4d20a12489dc/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
+        <dex dex="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-24.2.1_3d755d04a28f070d3c7c11ece99613f7fc401f7e/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-24.2.1_5bc828402d168436b49f9914f3411a02cda423b2/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
+        <dex dex="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-24.2.1_058ecd2bfbdae2895dcb89a5da1ea715e6d2fda1/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="867dad63c33388ff8c7644b236579355036d075f">
+        <dex dex="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_04181153561a2585c24172d1fac6a727148b7159/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="19875f3cdc74fd5f57387d8c9ca56d3a3cbe4ff9">
+        <dex dex="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_a82b5512dc3a631cb1f03c07a0626c2283abb040/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
+        <dex dex="/home/adriano/AndroidStudioProjects/NumberX/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-utils-24.2.1_a989591df9625d71f424190844c999696a9bd709/classes.dex" />
     </item>
 
 </items>
