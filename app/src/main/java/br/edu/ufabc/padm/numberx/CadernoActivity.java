@@ -1,8 +1,8 @@
 package br.edu.ufabc.padm.numberx;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,7 +30,7 @@ public class CadernoActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-                Intent intent = new Intent(parent.getContext(), Editor.class);
+                Intent intent = new Intent(parent.getContext(), EditorActivity.class);
                 intent.putExtra("editMode", false);
                 startActivity(intent);
 

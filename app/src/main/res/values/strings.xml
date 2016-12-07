@@ -18,4 +18,19 @@
     <string name="title_escolhadefase">Escolha de fase</string>
     <string name="title_activity_exercicio">Exercicio</string>
     <string name="section_format">Enunciado:Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</string>
+    <string name="new_constant_js">
+        javascript:
+        createConstant(%s);
+    </string>
+    <string name="create_user_table_str">
+        CREATE TABLE \"usuario\" (\"nome\" TEXT NOT NULL  UNIQUE  check(typeof(\"nome\") = \'text\') , \"email\" TEXT NOT NULL  UNIQUE  check(typeof(\"email\") = \'text\') , PRIMARY KEY (\"nome\", \"email\"));
+    </string>
+    <string name="create_progress_table_str">
+        CREATE TABLE \"progress\" (\"modulo\" TEXT PRIMARY KEY  NOT NULL  UNIQUE  check(typeof(\"modulo\") = \'text\') , \"fase\" TEXT NOT NULL  UNIQUE  check(typeof(\"fase\") = \'text\') , \"texto\" TEXT check(typeof(\"texto\") = \'text\') , \"problema\" TEXT check(typeof(\"problema\") = \'text\') , \"id_json\" TEXT check(typeof(\"id_json\") = \'text\') , \"data_alteracao\" DATETIME DEFAULT CURRENT_DATE)
+    </string>
+    <string name="create_notebook_table_str">
+        CREATE TABLE \"caderno\" (\"id\" FLOAT PRIMARY KEY  NOT NULL  UNIQUE  DEFAULT CURRENT_TIMESTAMP, \"anotacoes\" TEXT check(typeof(\"anotacoes\") = \'text\') )    </string>
+    <string name="carrega_dados_fase">FAZER</string>
+    <string name="carrega_dados_modulo">FAZER</string>
+    <string name="carrega_dados_rascunho">FAZER</string>
 </resources>

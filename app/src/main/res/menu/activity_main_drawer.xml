@@ -11,9 +11,9 @@
             android:icon="@drawable/notebook"
             android:title="Caderno" />
         <item
-            android:id="@+id/nav_calculator"
+            android:id="@+id/nav_editor"
             android:icon="@drawable/calculator"
-            android:title="Calculadora" />
+            android:title="Editor de problemas" />
 
     </group>
 
