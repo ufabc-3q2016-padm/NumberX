@@ -30,4 +30,7 @@
     </string>
     <string name="create_notebook_table_str">
         CREATE TABLE \"caderno\" (\"id\" FLOAT PRIMARY KEY  NOT NULL  UNIQUE  DEFAULT CURRENT_TIMESTAMP, \"anotacoes\" TEXT check(typeof(\"anotacoes\") = \'text\') )    </string>
+    <string name="carrega_dados_fase">FAZER</string>
+    <string name="carrega_dados_modulo">FAZER</string>
+    <string name="carrega_dados_rascunho">FAZER</string>
 </resources>
