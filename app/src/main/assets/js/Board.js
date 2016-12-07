@@ -12,10 +12,17 @@ var cancel = function(e) {
         clearTimeout(presstimer);
         presstimer = null;
     }
+    
     if (this.classList != null)
         this.classList.remove("longpress");
     sortMoving = false;
     
+};
+
+var finish = function(e) {
+    cancel(e);
+    
+    trash(false);
 };
 
 var click = function(e) {
@@ -51,11 +58,32 @@ var start = function(e) {
     
     return false;
 };
-//End of long press code
+
 var onMoveCancel =  function(e) {
     //console.log(sortMoving);
     if (sortMoving) {
         cancel(e);
+    }
+}
+//End of long press code
+
+//Trash icon
+function trash(show) {
+    var container = document.getElementById("trash-container");
+    if (show) {
+        var trash = document.createElement("img");
+        trash.setAttribute("id","trash");
+        trash.setAttribute("src","ic_delete_black_48dp_1x.png");
+        trash.setAttribute("ondragover","allowDrop(event)");
+        trash.setAttribute("ondrop","dropObject(event)");
+        trash.style.width = '42px';
+        trash.style.height = '42px';
+        trash.style.paddingLeft = "150px";
+        trash.style.float = "left";
+        container.appendChild(trash);
+    } else {
+        if (container.children.length > 0)
+            container.removeChild(container.children[0]);
     }
 }
 
@@ -207,6 +235,7 @@ function Equation(context) {
         //Cria list items para cada termo:
         for (t in equation.current) {
             element = document.createElement("li");
+            
             if (equation.current[t] instanceof Term) {
                 
                 element.setAttribute("data-id", t);
@@ -220,7 +249,7 @@ function Equation(context) {
                 element.setAttribute("ondragover","allowDrop(event)");
                 
                 //Long press listeners
-                element.addEventListener("mousedown", start); //Needed to work on PC browsers
+                //element.addEventListener("mousedown", start); //Needed to work on PC browsers
                 element.addEventListener("touchstart", start);
                 element.addEventListener("click", click);
                 element.addEventListener("mouseout", cancel);
@@ -428,57 +457,83 @@ function LinearSystem() {
         
         document.body.appendChild(systemContainer);
         var equationList;
-        var element;
+        var element, vertList, container, divider, space;
         //Para cada equação, cria um list item, e dentro dela, um ícone e um ul, onde os termos serão inseridos no setup
         for (var e in system.equations) {
             system.equations[e].system = system;  //Passando o contexto para a equação
             
             element = document.createElement('li');
+            element.setAttribute('style',"list-style-type: none;");
             element.setAttribute('data-id', e);
             element.setAttribute('id', "equation" + e);
             
-            systemList.appendChild(element);
+            element.setAttribute("ondrop","dropObject(event)");
+            element.setAttribute("ondragover","allowDrop(event)");
             
+            vertList = document.createElement('table');
+            element.appendChild(vertList);
+            
+            //Setup container for the equation and drag handler
+            container = document.createElement('tr');
+            //container.setAttribute('style',"list-style-type: none;");
             var icon = document.createElement('img');
             icon.setAttribute("src","ic_open_with_black_24dp_2x.png");
             icon.style.width = '24px';
             icon.style.height = '24px';
             icon.style.float = 'left';
             icon.style.fontSize = "15px";
-            element.appendChild(icon);
+            container.appendChild(icon);
+            vertList.appendChild(container);
+            
+            //Setup division listener
+            divider = document.createElement("li");
+            //divider.textContent = " ";
+            divider.style.paddingTop = "4px";
+            divider.setAttribute("ondrop","dropObject(event)");
+            divider.setAttribute("ondragover","allowDrop(event)");
+            divider.setAttribute("ondragleave","onDragLeave(event)");
+            //divider.setAttribute('style',"list-style-type: none;");
+            divider.class = "divider";
+            divider.context = system.equations[e];
+            vertList.appendChild(divider);
+            
+            systemList.appendChild(element);
             
             equationList = document.createElement('ul');
             equationList.style.paddingLeft = "40px";
-            //equationList.setAttribute('class', "ignore");
-            element.setAttribute("ondrop","dropObject(event)");
-            element.setAttribute("ondragover","allowDrop(event)");
             
-            element.appendChild(equationList);
+            container.appendChild(equationList);
+            
             system.equations[e].id = e;
             system.equations[e].setup(equationList);
         }
         
-        systemContainer.style.fontSize = "28px";
+        systemContainer.style.fontSize = "24px";
         
         //Tranforma a lista de equações em uma lista reordenável drag and drop
         this.sortable = new Sortable.create(systemList, {
             animation: 100,
-            filter: "ignore",
         });
     };
 }
 
 //Constant constructor
 function Constant(value) {
-    this.context = this;
+    var context = this;
     this.value = value;
+    this.element;
     this.sortable;
+    this.delete =  function() {
+        this.element.parentElement.removeChild(this.element);
+        delete this;
+    }
     this.setup = function() {
         var container = document.createElement('ui');
         var constant = document.createElement('li');
         var value;
         
-        container.style.fontSize = "28px";
+        constant.context = context;
+        container.style.fontSize = "24px";
         container.style.marginLeft = "6px";
         container.style.marginRight = "6px";
         container.appendChild(constant);
@@ -488,15 +543,27 @@ function Constant(value) {
             value = this.value;
         else
             value = this.value.toPrecision(3);
-        katex.render(value.toString(), constant);
+        katex.render(value.toString(), constant, context);
         
         constant.style.display = "inline";
         
         this.sortable = new Sortable.create(container);
         
-        constant.context = this.context;
         container.setAttribute("draggable","true");
         container.setAttribute("ondragstart","onDrag(event)");
+        
+        //Long press listeners
+        //container.addEventListener("mousedown", start); //Needed to work on PC browsers
+        container.addEventListener("touchstart", start);
+        container.addEventListener("click", click);
+        container.addEventListener("mouseout", finish);
+        container.addEventListener("touchend", finish);
+        container.addEventListener("touchleave", finish);
+        container.addEventListener("touchcancel", finish);
+        container.addEventListener("touchmove", cancel);
+        //container.addEventListener("drag", cancel);
+        
+        this.element = container;
     };
 }
 
@@ -512,18 +579,18 @@ function onDrag(ev) {
 
 function allowDrop(ev) {
     ev.preventDefault();
-    var space = event.target.id.split("#");
-    if (space[0] == "//space") {
+    var space = event.target.class;
+    if (space == "divider") {
         ev.target.style.backgroundColor = "red";
         ev.target.style.paddingLeft = "15px";
     }
 }
 
 function onDragLeave(ev) {
-    var space = event.target.id.split("#");
-    if (space[0] == "//space") {
+    var space = event.target.class;
+    if (space == "divider") {
         ev.target.style.backgroundColor = "";
-        ev.target.style.paddingLeft = "6px";
+        ev.target.style.paddingLeft = "4px";
     }
 }
 
@@ -534,13 +601,17 @@ function dropObject(event) {
     }
     event.preventDefault();
     
-    if(event.target.context != null) {
-        
+    trash(false);
+    
+    console.log(event.target);
+    
+    if(event.target.context != null && event.target.context.equation != null) {
         var equation = event.target.context.equation;
         if (dragObject instanceof Constant) {  //Multiply the target equation
             var constant = dragObject.value;
-            if (constant != 0)
-                equation.multiplyBy(constant);
+            if (constant != 0) {
+                    equation.multiplyBy(constant);
+            }
         } else if (dragObject instanceof Term && !dragObject.equation.sortable.options.sort) { //Do the sum of the dragged and target terms
             var draggedTerm = dragObject;
             var draggedEquation = dragObject.equation;
@@ -564,18 +635,32 @@ function dropObject(event) {
             //console.log("target " + targetTerm);
         }
         equation.system.equationSort(true);
+    } else if (event.target.class === "divider") {
+        if (dragObject instanceof Constant) {  //Multiply the target equation
+            var constant = dragObject.value;
+            if (constant != 0)
+                event.target.context.multiplyBy(1/constant);
+            event.target.style.backgroundColor = "";
+        }
     }
+    
+    if (event.target.id === "trash")
+            dragObject.delete();
 }
 
 function onLongPress(event) {
+    presstimer = null;
+    
     if (event.stopPropagation) {
         event.stopPropagation(); // stops the browser from redirecting.
     }
-    
-    event.target.context.element.style.backgroundColor = "blue";
-    var selectedEquation = event.target.context.equation;
-    
-    selectedEquation.system.equationSort(false);
+    if (event.target.context instanceof Term) {
+        event.target.context.element.style.backgroundColor = "blue";
+        var selectedEquation = event.target.context.equation;
+        selectedEquation.system.equationSort(false);
+    } else {
+        trash(true);
+    }
     
 }
 

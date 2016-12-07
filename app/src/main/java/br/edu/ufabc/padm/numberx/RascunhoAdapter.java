@@ -7,17 +7,17 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import br.edu.ufabc.padm.numberx.model.DAO;
 import br.edu.ufabc.padm.numberx.model.Rascunho;
+import br.edu.ufabc.padm.numberx.model.RascunhoDAO;
 
 public class RascunhoAdapter extends BaseAdapter {
-    private DAO.Rascunho dao;
+    private RascunhoDAO dao;
     private Context context;
 
 
     public RascunhoAdapter(Context c) {
         this.context = c;
-        this.dao = DAO.Rascunho.newInstance();
+        this.dao = RascunhoDAO.newInstance();
     }
 
     @Override
