@@ -22,4 +22,15 @@
         javascript:
         createConstant(%s);
     </string>
+    <string name="create_user_table_str">
+        CREATE TABLE \"usuario\" (\"nome\" TEXT NOT NULL  UNIQUE  check(typeof(\"nome\") = \'text\') , \"email\" TEXT NOT NULL  UNIQUE  check(typeof(\"email\") = \'text\') , PRIMARY KEY (\"nome\", \"email\"));
+    </string>
+    <string name="create_progress_table_str">
+        CREATE TABLE \"progress\" (\"modulo\" TEXT PRIMARY KEY  NOT NULL  UNIQUE  check(typeof(\"modulo\") = \'text\') , \"fase\" TEXT NOT NULL  UNIQUE  check(typeof(\"fase\") = \'text\') , \"texto\" TEXT check(typeof(\"texto\") = \'text\') , \"problema\" TEXT check(typeof(\"problema\") = \'text\') , \"id_json\" TEXT check(typeof(\"id_json\") = \'text\') , \"data_alteracao\" DATETIME DEFAULT CURRENT_DATE)
+    </string>
+    <string name="create_notebook_table_str">
+        CREATE TABLE \"caderno\" (\"id\" FLOAT PRIMARY KEY  NOT NULL  UNIQUE  DEFAULT CURRENT_TIMESTAMP, \"anotacoes\" TEXT check(typeof(\"anotacoes\") = \'text\') )    </string>
+    <string name="carrega_dados_fase">FAZER</string>
+    <string name="carrega_dados_modulo">FAZER</string>
+    <string name="carrega_dados_rascunho">FAZER</string>
 </resources>
