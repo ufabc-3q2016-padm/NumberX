@@ -1,24 +1,23 @@
 package br.edu.ufabc.padm.numberx;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import br.edu.ufabc.padm.numberx.model.DAO;
 import br.edu.ufabc.padm.numberx.model.Rascunho;
-import br.edu.ufabc.padm.numberx.model.RascunhoDAO;
 
 public class RascunhoAdapter extends BaseAdapter {
-    private RascunhoDAO dao;
+    private DAO.Rascunho dao;
     private Context context;
 
 
     public RascunhoAdapter(Context c) {
         this.context = c;
-        this.dao = RascunhoDAO.newInstance();
+        this.dao = DAO.Rascunho.newInstance();
     }
 
     @Override
