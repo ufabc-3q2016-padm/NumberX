@@ -9,9 +9,6 @@
         body {
             background-image: url(grid.png);
         }
-        
-    
-        
     </style>
     
     <div id="trash-container"></div>
@@ -24,5 +21,16 @@
     <script src="js/DragDropTouch.js"></script>
     <script src="js/Board.js"></script>
     
+    <script>
+        //Sistema para o Problema 1:
+        var sy = new LinearSystem();
+
+        var eq = new Equation(sy);
+
+        eq.setTerms([new Term(9, "x", 0, 1, eq), new Equality(eq), new Term(27, "x", 0, 0, eq)]);
+
+        sy.setup([eq]);
+        
+    </script>
     
 </body>

@@ -12,18 +12,16 @@
     <string name="saved_toast_dialog">Título alterado com sucesso</string>
     <string name="cancel_option_dialog">Cancelar</string>
     <string name="default_title">Novo cálculo</string>
-    <string name="board_url">file:///android_asset/Board.html</string>
+    <string name="board_url">file:///android_asset/Exemplo.html</string>
     <string name="icon_return">Return</string>
     <string name="title_cadernoactivity">Caderno</string>
     <string name="title_escolhadefase">Escolha de fase</string>
     <string name="title_activity_exercicio">Exercicio</string>
     <string name="section_format">Enunciado:Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</string>
-<<<<<<< HEAD
     <string name="descricao_label">Enunciado</string>
     <string name="title_activity_teste">teste</string>
     <string name="teste">q isso</string>
     <string name="format">%1$s</string>
-=======
     <string name="new_constant_js">
         javascript:
         createConstant(%s);
@@ -39,5 +37,4 @@
     <string name="carrega_dados_fase">FAZER</string>
     <string name="carrega_dados_modulo">FAZER</string>
     <string name="carrega_dados_rascunho">FAZER</string>
->>>>>>> bf4f0eb034a7877194550cb11bea81948d013fae
 </resources>

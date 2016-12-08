@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Number X</title>
+</head>
+
+<body>
+    <style>
+        body {
+            background-image: url(grid.png);
+        }
+    </style>
+    
+    <div id="trash-container"></div>
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    <link rel="stylesheet" href="js/katex.css">
+    <script src="js/katex.js"></script>
+    <script src="js/Sortable.js"></script>
+    <script src="js/DragDropTouch.js"></script>
+    <script src="js/Board.js"></script>
+    
+    <script>
+        //Sistema para o Problema 4:
+        var sy = new LinearSystem();
+
+        var eq = new Equation(sy);
+        var eq2 = new Equation(sy);
+        var eq3 = new Equation(sy);
+        var eq4 = new Equation(sy);
+
+        eq.setTerms([new Term(5, "x", 3, 1, eq), new Term(5, "x", 2, 1, eq), new Equality(eq), new Term(15, "x", 0, 0, eq)]);
+        eq2.setTerms([new Term(7, "x", 1, 1, eq2), new Term(3, "x", 1, 1, eq2), new Term(1, "x", 3, 1, eq2), new Equality(eq2), new Term(12, "x", 0, 0, eq2)]);
+        eq3.setTerms([new Term(2, "x", 0, 1, eq3), new Term(3, "x", 2, 1, eq3), new Equality(eq3), new Term(3, "x", 0, 0, eq3)]);
+        eq4.setTerms([new Term(2, "x", 1, 1, eq4), new Term(6, "x", 2, 1, eq4), new Term(8, "x", 3, 1, eq4), new Equality(eq4), new Term(0, "x", 0, 0, eq4)]);
+
+        sy.setup([eq, eq2, eq3, eq4]);
+        
+    </script>
+    
+</body>

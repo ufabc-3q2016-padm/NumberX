@@ -1,7 +1,6 @@
 package br.edu.ufabc.padm.numberx;
 
 import android.content.Intent;
-<<<<<<< HEAD
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -9,10 +8,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-=======
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
->>>>>>> bf4f0eb034a7877194550cb11bea81948d013fae
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,8 +17,8 @@ import android.widget.ListView;
 public class EscolhaDeFaseActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
-        @Override
-        protected void onCreate (Bundle savedInstanceState){
+    @Override
+    protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_escolha_de_fase);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -31,25 +26,25 @@ public class EscolhaDeFaseActivity extends AppCompatActivity
 
         populateFases();
 
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-            drawer.setDrawerListener(toggle);
-            toggle.syncState();
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
 
-            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-            navigationView.setNavigationItemSelectedListener(this);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
-            @Override
-            public void onBackPressed() {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                if (drawer.isDrawerOpen(GravityCompat.START)) {
-                    drawer.closeDrawer(GravityCompat.START);
-                } else {
-                    super.onBackPressed();
-                }
-            }
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     private void populateFases() {
         final ListView listView = (ListView) findViewById(R.id.list_fases);
@@ -100,39 +95,38 @@ public class EscolhaDeFaseActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-            @SuppressWarnings("StatementWithEmptyBody")
-            //@Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                // Handle navigation view item clicks here.
-                int id = item.getItemId();
+    @SuppressWarnings("StatementWithEmptyBody")
+    //@Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
 
-                if (id == R.id.nav_progress) {
-                    startActivity((new Intent(this, EscolhaDeFaseActivity.class)));
+        if (id == R.id.nav_progress) {
+            startActivity((new Intent(this, EscolhaDeFaseActivity.class)));
 
-                    return true;
+            return true;
 
-                } else if (id == R.id.nav_notebook) {
-                    startActivity((new Intent(this, CadernoActivity.class)));
+        } else if (id == R.id.nav_notebook) {
+            startActivity((new Intent(this, CadernoActivity.class)));
 
-                    return true;
+            return true;
 
-                } else if (id == R.id.nav_calculator) {
-                    Intent intent = new Intent(this, Editor.class);
-                    intent.putExtra("editMode", true);
-                    startActivity(intent);
+        } else if (id == R.id.nav_editor) {
+            Intent intent = new Intent(this, EditorActivity.class);
+            intent.putExtra("editMode", true);
+            startActivity(intent);
 
-                } else if (id == R.id.nav_adjust) {
+        } else if (id == R.id.nav_adjust) {
 
-                }else if(id==R.id.nav_home){
-                    Intent intent = new Intent(this, MainActivity.class);
-                    startActivity(intent);
+        }else if(id==R.id.nav_home){
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
 
-                }
+        }
 
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                return true;
-            }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
 }
-
 

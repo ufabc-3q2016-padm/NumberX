@@ -8,16 +8,16 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import br.edu.ufabc.padm.numberx.model.Rascunho;
-import br.edu.ufabc.padm.numberx.model.RascunhoDAO;
+import br.edu.ufabc.padm.numberx.model.DAO;
 
 public class RascunhoAdapter extends BaseAdapter {
-    private RascunhoDAO dao;
+    private DAO.Rascunho dao;
     private Context context;
 
 
     public RascunhoAdapter(Context c) {
         this.context = c;
-        this.dao = RascunhoDAO.newInstance();
+        this.dao = DAO.Rascunho.newInstance();
     }
 
     @Override
