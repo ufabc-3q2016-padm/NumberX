@@ -7,12 +7,5 @@
         android:title="@string/action_settings"
         app:showAsAction="never" />
 
-    <item
-        android:id="@+id/action_calculator"
-        android:orderInCategory="1"
-        android:title="@string/icon_calculator_name"
-        app:showAsAction="always"
-        android:icon="@drawable/calculator"
-        />
 
 </menu>

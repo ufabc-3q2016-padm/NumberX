@@ -3,6 +3,10 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home_black"
+            android:title="Home" />
+        <item
             android:id="@+id/nav_progress"
             android:icon="@drawable/progressarrow"
             android:title="Progresso" />
@@ -15,9 +19,11 @@
             android:icon="@drawable/calculator"
             android:title="Calculadora" />
 
+
+
     </group>
 
-    <item android:title="dsadasd">
+    <item android:title="Ajustes">
         <menu>
             <item
                 android:id="@+id/nav_adjust"

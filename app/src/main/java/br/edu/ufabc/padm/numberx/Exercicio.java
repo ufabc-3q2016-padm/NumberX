@@ -1,5 +1,6 @@
 package br.edu.ufabc.padm.numberx;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,10 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
+import br.edu.ufabc.padm.numberx.model.Fase;
+import br.edu.ufabc.padm.numberx.model.FaseDAO;
+
+
 public class Exercicio extends AppCompatActivity {
 
     /**
@@ -29,11 +34,13 @@ public class Exercicio extends AppCompatActivity {
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    public int pos;
 
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private EnunciadoFragment detail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +56,15 @@ public class Exercicio extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        pos = getIntent().getExtras().getInt("fasePosition");
 
 
 
+
+
+    }
+
+    private void Exercicio() {
 
     }
 
@@ -73,7 +86,11 @@ public class Exercicio extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        }
+        } else if(id == R.id.action_return){
+        startActivity((new Intent(this, EscolhaDeFaseActivity.class)));
+
+        return true;
+    }
 
         return super.onOptionsItemSelected(item);
     }
@@ -96,6 +113,7 @@ public class Exercicio extends AppCompatActivity {
          * number.
          */
         public static PlaceholderFragment newInstance(int sectionNumber) {
+
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
@@ -118,6 +136,9 @@ public class Exercicio extends AppCompatActivity {
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
+        //int pos = getIntent().getExtras().getInt("fasePosition");
+
+
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -125,14 +146,20 @@ public class Exercicio extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            switch(position){
+
+                case 0: return  EnunciadoFragment.newInstance(pos);
+                case 1: return  EditorFragment.newInstance();
+
+                // default: return MyFragment.newInstance();
+                /* It is better to use default so that it always returns a fragment and no problems would ever occur */
+            }
+            return null;
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
+            // Show 2 total pages.
             return 2;
         }
 
@@ -148,4 +175,7 @@ public class Exercicio extends AppCompatActivity {
             return null;
         }
     }
+
+
+
 }

@@ -22,21 +22,25 @@ public class FaseDAO {
         c = new Fase();
 
         c.setTitulo("Fase 1");
+        c.setDescricao("Resolva o sistema exibido na tab seguinte");
 
         fases.add(c);
 
         c = new Fase();
         c.setTitulo("Fase 2");
+        c.setDescricao("Resolva o sistema exibido na tab seguinte");
 
         fases.add(c);
 
         c = new Fase();
         c.setTitulo("Fase 3");
+        c.setDescricao("Resolva o sistema exibido na tab seguinte");
 
         fases.add(c);
 
         c = new Fase();
         c.setTitulo("Fase 4");
+        c.setDescricao("Resolva o sistema exibido na tab seguinte");
 
         fases.add(c);
 
