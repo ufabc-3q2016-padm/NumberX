@@ -41,12 +41,28 @@ function resetSpans(equation) {
     }
 }
 
+function getEquationBySymbolId(id) {
+    if (Symbol.symbols[id] != undefined)
+        return Symbol.symbols[id].term.equation;
+    else
+        return null;
+}
+
+function getTermBySymbolId(id) {
+    if (Symbol.symbols[id] != undefined)
+        return Symbol.symbols[id].term;
+    else
+        return null;
+}
+
 //Term constructor
 function Term(value, variable, index, degree, context) {
-    this.coeficient = new Symbol(value, context);
-    this.variable = new Symbol(variable, context);
-    this.index = new Symbol(index, context);
-    this.degree = new Symbol(degree, context);
+    this.equation = context;
+    this.coeficient = new Symbol(value, this);
+    this.variable = new Symbol(variable, this);
+    this.index = new Symbol(index, this);
+    this.degree = new Symbol(degree, this);
+    this.beforeEquality = true;
 }
 
 Term.prototype.toString = function() {
@@ -54,7 +70,7 @@ Term.prototype.toString = function() {
     if (this.degree.value > 0) {
         label = this.coeficient.value + this.variable.value + "_" + this.index.value; //+ "^" + this.degree.value;
     } else {
-        label = this.coeficient.value;
+        label = this.coeficient.value.toString();
     }
     return label;
 };
@@ -62,14 +78,24 @@ Term.prototype.toString = function() {
 //Equation constructor
 function Equation() {
     var equation = this;
+    var equationList;
     this.terms = {};
     this.current = Object.keys(this.terms).map(function(key) {return this.terms[key];});
     this.sortable;
     this.symbols = [];
     this.spans = [];
     this.addTerm = function(term) { this.terms.push(term); };
+    this.multiplyBy = function(constant) {
+        for (t in this.terms) {
+            if (this.terms[t] instanceof Term)
+                this.terms[t].coeficient.value *= constant;
+        }
+        this.update();
+    };
     //Recebe um ul, e constroi uma equação drag and drop com base nos termos passados na construção
-    this.setup = function(equationList) {
+    this.setup = function(eqList) {
+        equationList = eqList;
+        
         if (equation.terms.equality == undefined) {
             equation.terms.equality = "=0";
         }
@@ -83,6 +109,7 @@ function Equation() {
             } else {
                 element.setAttribute("data-id", "equality");
                 element.setAttribute("id", "equality");
+                element.setAttribute("class","ignore");
             }
             element.style.display = "inline";
             equationList.appendChild(element);
@@ -90,30 +117,53 @@ function Equation() {
         //Transforma-os em uma lista reordenável
         this.sortable = new Sortable.create(equationList, {
             animation: 100,
-            oposite: null,
+            filter: ".ignore",
             //Se passar pela igualdade, deve inverter o sinal
             onSort: function(evt) {
-                if (this.oposite != null) {
-                    this.oposite.coeficient.value = -1 * this.oposite.coeficient.value;
-                    this.oposite = null;
-                }
-                equation.update(equationList);
+                equation.update();
             },
             onMove: function(evt) {
-                if (evt.related.id == "equality") {
-                    this.oposite = equation.getTermById(evt.dragged.id);
-                } if (evt.dragged.id == "equality") {
-                    this.oposite = equation.getTermById(evt.related.id);
-                }
+                    equation.oposite = equation.getTermById(evt.dragged.id);
+                
             },
         });
         console.log("Equation list elements: " + equationList.childElementCount);
-        equation.update(equationList);
+        equation.update();
     };
-    this.update = function(equationList) {
+    this.update = function() {
+        //Lógica de multiplicar por -1
+        if (equation.oposite != null) {
+            //Antes que atualize pros termos atuais
+            //console.log("Previous equation TeX: " + equation.current);
+            var previousPos = equation.current.indexOf(equation.oposite);
+            var equalityPos = equation.current.indexOf(equation.terms.equality);
+            console.log(equation.equalityPos);
+            if (previousPos < equalityPos)
+                equation.oposite.beforeEquality = true;
+            else
+                equation.oposite.beforeEquality = false;
+        }
+        
+        //Atualizar termos
         var currentString = equation.sortable.toArray();
         equation.current = currentString.map(equation.getTermById);
         console.log("Current equation TeX: " + equation.current);
+        
+        //Lógica de multiplicar por -1 parte 2
+        if (equation.oposite != null) {
+            var currentPos = equation.current.indexOf(equation.oposite);
+            equalityPos = equation.current.indexOf(equation.terms.equality);
+            console.log("Previous pos: " + previousPos);
+            console.log("Current pos: " + currentPos);
+            if (equation.oposite.beforeEquality) {
+                if (currentPos >= equalityPos)
+                    equation.oposite.coeficient.value = -1 * this.oposite.coeficient.value;
+            } else {
+                if (currentPos <= equalityPos)
+                    equation.oposite.coeficient.value = -1 * this.oposite.coeficient.value;
+            }
+        }
+        
         Symbol.spans = [];
         var element;
         //Gerar código TeX para cada termo, e renderizá-lo usando KaTex
@@ -122,7 +172,7 @@ function Equation() {
             //console.log(element);
             var TeX = equation.current[t].toString();
             if (equation.current[t] instanceof Term) {
-                if (t > 0 && equation.current[t-1] instanceof Term && equation.current[t].coeficient.value > 0)
+                if (t > 0 && equation.current[t-1] instanceof Term && equation.current[t].coeficient.value >= 0)
                     TeX = "+" + TeX;
             } else {         //equality
                 console.log(t);
@@ -146,10 +196,12 @@ function Equation() {
 
 //Linear System constructor
 function LinearSystem(equations) {
+    this.id;
     this.equations = equations;
     this.sortable;
-    this.add = function (equation) { this.equations.push(equation); };
-    //Faz multiplas configuraçẽs para mostrar as equações da forma correta
+    this.add = function(equation) { this.equations.push(equation); };
+    this.getEquationById = function(id) { return this.equation[id]; };
+    //Faz multiplas configurações para mostrar as equações da forma correta
     this.setup = function() {
         var systemContainer = document.createElement('div');
         
@@ -192,8 +244,11 @@ function LinearSystem(equations) {
             equationList = document.createElement('ul');
             equationList.style.paddingLeft = "40px";
             //equationList.setAttribute('class', "ignore");
+            element.setAttribute("ondrop","dropConstant(event)");
+            element.setAttribute("ondragover","allowDrop(event)");
             
             element.appendChild(equationList);
+            this.equations[e].id = e;
             this.equations[e].setup(equationList);
         }
         
@@ -207,20 +262,61 @@ function LinearSystem(equations) {
     };
 }
 
+//Constant constructor
+function Constant(value) {
+    this.value = value;
+    this.sortable;
+    this.setup = function() {
+        var container = document.createElement('ui');
+        var constant = document.createElement('li');
+        container.style.fontSize = "28px";
+        container.style.marginLeft = "6px";
+        container.style.marginRight = "6px";
+        container.appendChild(constant);
+        document.body.appendChild(container);
+        katex.render(this.value.toString(), container);
+        this.sortable = new Sortable.create(container);
+        container.setAttribute("ondragstart","dragConstant(event," + this.value + ")");
+    };
+}
+
+function createConstant(value) {
+    var constant = new Constant(value);
+    constant.setup();
+}
+
+function dragConstant(ev, value) {
+    ev.dataTransfer.setData("value", value);
+}
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function dropConstant(event) {
+    event.preventDefault();
+    var equation = getEquationBySymbolId(event.target.id);
+    var constant = event.dataTransfer.getData("value");
+    if (equation != null && constant != 0)
+        equation.multiplyBy(constant);
+        //alert("Should multiply: " + getEquationSymbolbyId(event.target.id).id + " by " + event.dataTransfer.getData("value"));
+        
+    
+}
+
 //Dados de teste:
 
 var eq = new Equation();
 var eq2 = new Equation();
-var eq3 = new Equation();
+var eq3 = new Equation(); 
 
-var terms1 = {"0": new Term(8, "x", 0, 1, eq), "1": new Term(12, "x", 1, 1, eq), "equality": "=","2": new Term(2, "x", 2, 1, eq)};
-var terms2 = {"0": new Term(3, "x", 0, 1, eq2),"1": new Term(7,"x", 1, 1, eq2),"equality": "="};
-var terms3 = {"0": new Term(55, "x", 0, 1, eq3),"1": new Term(9,"x", 2, 1, eq3),"equality": "="};
-
-eq.terms = terms1;
-eq2.terms = terms2;
-eq3.terms = terms3;
+eq.terms = {"0": new Term(8, "x", 0, 1, eq), "1": new Term(12, "x", 1, 1, eq), "equality": "=", "2": new Term(2, "x", 2, 0, eq)};
+eq2.terms = {"0": new Term(3, "x", 0, 1, eq2),"1": new Term(7,"x", 1, 1, eq2),"equality": "="};
+eq3.terms = {"0": new Term(55, "x", 0, 1, eq3),"1": new Term(9,"x", 2, 1, eq3),"equality": "="};
 
 var sy = new LinearSystem([eq, eq2, eq3]);
 
 sy.setup();
+
+createConstant(2);
+createConstant(7);

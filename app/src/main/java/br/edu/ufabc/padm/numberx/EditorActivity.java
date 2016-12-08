@@ -2,7 +2,6 @@ package br.edu.ufabc.padm.numberx;
 
 import android.app.Activity;
 import android.content.ClipData;
-import android.content.ClipDescription;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -13,20 +12,19 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.DragEvent;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.webkit.MimeTypeMap;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Editor extends AppCompatActivity {
+public class EditorActivity extends AppCompatActivity {
     private String title;
     private Toolbar bottomToolbar;
     private FloatingActionButton fab;
@@ -34,6 +32,7 @@ public class Editor extends AppCompatActivity {
     private View dialogView;
     private AlertDialog dialogEdit;
     private Activity activity;
+    private WebView board;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,13 +63,25 @@ public class Editor extends AppCompatActivity {
     }
 
     private void showNumberPicker() {
-        BottomSheetDialog numberPicker = new BottomSheetDialog(this);
+        final BottomSheetDialog numberPicker = new BottomSheetDialog(this);
         LayoutInflater inflater = this.getLayoutInflater();
         View pickerView = inflater.inflate(R.layout.number_picker, null);
         numberPicker.setContentView(pickerView);
         numberPicker.show();
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
+        //InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        //imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
+
+        final EditText number = (EditText) pickerView.findViewById(R.id.number_edit);
+        number.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                String jsInsertCode = String.format(getString(R.string.new_constant_js), number.getText().toString());
+                board.loadUrl(jsInsertCode);
+                numberPicker.dismiss();
+                return false;
+            }
+        });
+
     }
 
     private void showSymbolPicker(int page) {
@@ -110,7 +121,7 @@ public class Editor extends AppCompatActivity {
                 .setNegativeButton(R.string.cancel_option_dialog,new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //Toast.makeText(Editor.this, R.string.cancel_toast_dialog,Toast.LENGTH_LONG).show();
+                        //Toast.makeText(EditorActivity.this, R.string.cancel_toast_dialog,Toast.LENGTH_LONG).show();
                         dialog.cancel();
                         dialog.dismiss();
                     }
@@ -130,8 +141,8 @@ public class Editor extends AppCompatActivity {
 
     /**
      * Handle the AppBar and BottomBar behavior if viewing or editing a math problem.
-     * @param edit This value comes with the intent, and must be passed as a extra when the activity is started, true for the calculator,
-     * false for notebook files.
+     * @param edit given by intent, and must be passed as a extra when the activity is started, true for the creating a new problem,
+     * false for opening notebook files.
      */
     private void editMode(boolean edit) {
         bottomToolbar  = (Toolbar) findViewById(R.id.bottomToolbar);
@@ -143,7 +154,7 @@ public class Editor extends AppCompatActivity {
                 @Override
                 public void onClick(View view) { showNumberPicker(); }
             });
-            ((Button) findViewById(R.id.x_alphabet_picker_button)).setOnClickListener(new View.OnClickListener() {
+            ((Button) findViewById(R.id.x_latin_picker_button)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) { showSymbolPicker(0); }
             });
@@ -173,7 +184,7 @@ public class Editor extends AppCompatActivity {
     }
 
     private  void setupDrag() {
-        ((Button) findViewById(R.id.x_alphabet_picker_button)).setOnLongClickListener(new View.OnLongClickListener() {
+        ((Button) findViewById(R.id.x_latin_picker_button)).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 ClipData data = ClipData.newPlainText("", "");
@@ -217,8 +228,8 @@ public class Editor extends AppCompatActivity {
     }
 
     /**
-     * @param show specifies if the ActionBar for editing mode (calculator) must be shown, if false showing the view AppBar.
-     * This value comes with the intent, and must be passed as a extra when the activity is started, true for the calculator,
+     * @param show specifies if the ActionBar for editing mode must be shown, if false showing the view AppBar.
+     * Must be passed as a extra for the intent when the activity is started, true for the calculator,
      * false for notebook files.
      */
     private void showEditActionBar(boolean show) {
@@ -269,7 +280,7 @@ public class Editor extends AppCompatActivity {
      * Setup the webview to display the math Board, using html/css/js
      */
     private void setupBoard() {
-        WebView board = (WebView) findViewById(R.id.Board);
+        board = (WebView) findViewById(R.id.Board);
         board.getSettings().setJavaScriptEnabled(true);
         board.loadUrl(getString(R.string.board_url));
         board.setOnLongClickListener(new View.OnLongClickListener() {
@@ -282,8 +293,10 @@ public class Editor extends AppCompatActivity {
         board.setOnDragListener(new View.OnDragListener() {
             @Override
             public boolean onDrag(View view, DragEvent dragEvent) {
-                if (dragEvent.getAction() == DragEvent.ACTION_DROP)
-                    Toast.makeText(Editor.this, "TODO: Drag and drop symbols",Toast.LENGTH_LONG).show();
+                if (dragEvent.getAction() == DragEvent.ACTION_DROP) {
+                    //board.loadUrl("javascript:constant.setup()");
+                    Toast.makeText(EditorActivity.this, "TODO: Drag and drop symbols", Toast.LENGTH_LONG).show();
+                }
                 return true;
             }
         });
