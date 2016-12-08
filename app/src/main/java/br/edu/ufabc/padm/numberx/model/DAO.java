@@ -23,21 +23,25 @@ public class DAO {
             c = new br.edu.ufabc.padm.numberx.model.Fase();
 
             c.setTitulo("Fase 1");
+            c.setProblem("file:///android_asset/Fase1.html");
 
             fases.add(c);
 
             c = new br.edu.ufabc.padm.numberx.model.Fase();
             c.setTitulo("Fase 2");
+            c.setProblem("file:///android_asset/Fase2.html");
 
             fases.add(c);
 
             c = new br.edu.ufabc.padm.numberx.model.Fase();
             c.setTitulo("Fase 3");
+            c.setProblem("file:///android_asset/Fase3.html");
 
             fases.add(c);
 
             c = new br.edu.ufabc.padm.numberx.model.Fase();
             c.setTitulo("Fase 4");
+            c.setProblem("file:///android_asset/Fase4.html");
 
             fases.add(c);
 

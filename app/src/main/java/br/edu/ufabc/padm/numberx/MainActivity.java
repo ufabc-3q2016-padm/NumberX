@@ -2,6 +2,9 @@ package br.edu.ufabc.padm.numberx;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -10,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         populateModulos();
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -48,14 +51,22 @@ public class MainActivity extends AppCompatActivity
 
     private void populateModulos() {
         final ListView listView = (ListView)findViewById(R.id.list_modulos);
+
+
         listView.setAdapter(new ModuloAdapter(this));
+
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
                 Intent intent = new Intent(parent.getContext(), EscolhaDeFaseActivity.class);
                 startActivity(intent);
+
             }
         });
+
 
     }
 
@@ -72,25 +83,17 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-<<<<<<< HEAD
         } //else if (id == R.id.action_calculator) {
-            //Intent intent = new Intent(this, Editor.class);
-            //qintent.putExtra("editMode", true);
-            //startActivity(intent);
-            //return  true;
+        //Intent intent = new Intent(this, Editor.class);
+        //qintent.putExtra("editMode", true);
+        //startActivity(intent);
+        //return  true;
         //}
 
-=======
-        } else if (id == R.id.action_calculator) {
-            Intent intent = new Intent(this, EditorActivity.class);
-            intent.putExtra("editMode", true);
-            startActivity(intent);
-            return  true;
-        }
->>>>>>> bf4f0eb034a7877194550cb11bea81948d013fae
         return super.onOptionsItemSelected(item);
     }
 
@@ -102,25 +105,25 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_progress) {
             startActivity((new Intent(this, EscolhaDeFaseActivity.class)));
+
             return true;
 
         } else if (id == R.id.nav_notebook) {
             startActivity((new Intent(this, CadernoActivity.class)));
+
             return true;
 
         } else if (id == R.id.nav_editor) {
             Intent intent = new Intent(this, EditorActivity.class);
             intent.putExtra("editMode", true);
             startActivity(intent);
+
         } else if (id == R.id.nav_adjust) {
-<<<<<<< HEAD
 
         }else if(id==R.id.nav_home){
 
-=======
-            return true;
->>>>>>> bf4f0eb034a7877194550cb11bea81948d013fae
         }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
