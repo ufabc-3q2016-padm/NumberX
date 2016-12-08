@@ -75,12 +75,22 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+<<<<<<< HEAD
+        } //else if (id == R.id.action_calculator) {
+            //Intent intent = new Intent(this, Editor.class);
+            //qintent.putExtra("editMode", true);
+            //startActivity(intent);
+            //return  true;
+        //}
+
+=======
         } else if (id == R.id.action_calculator) {
             Intent intent = new Intent(this, EditorActivity.class);
             intent.putExtra("editMode", true);
             startActivity(intent);
             return  true;
         }
+>>>>>>> bf4f0eb034a7877194550cb11bea81948d013fae
         return super.onOptionsItemSelected(item);
     }
 
@@ -103,7 +113,13 @@ public class MainActivity extends AppCompatActivity
             intent.putExtra("editMode", true);
             startActivity(intent);
         } else if (id == R.id.nav_adjust) {
+<<<<<<< HEAD
+
+        }else if(id==R.id.nav_home){
+
+=======
             return true;
+>>>>>>> bf4f0eb034a7877194550cb11bea81948d013fae
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

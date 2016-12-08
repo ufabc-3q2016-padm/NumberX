@@ -1,0 +1,16 @@
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:stretchColumns="1">
+    <TextView android:id="@+id/enunciado_titulo"
+        android:textStyle="bold"
+        android:textSize="20dp"/>
+    <TableRow>
+        <TextView
+            android:textStyle="bold"/>
+        <TextView android:id="@+id/enunciado_descricao" />
+    </TableRow>
+
+</TableLayout>

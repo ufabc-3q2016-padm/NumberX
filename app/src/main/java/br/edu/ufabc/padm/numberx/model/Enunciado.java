@@ -1,9 +1,10 @@
 package br.edu.ufabc.padm.numberx.model;
 
 
-public class Fase {
+public class Enunciado {
     private String titulo;
     private String descricao;
+
 
     public String getTitulo() {
         return titulo;
@@ -20,7 +21,6 @@ public class Fase {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-
 
 
 
