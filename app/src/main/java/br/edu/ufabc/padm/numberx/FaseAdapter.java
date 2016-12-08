@@ -59,6 +59,7 @@ public class FaseAdapter extends BaseAdapter {
         titulo.setText(fase.getTitulo());
 
 
+
         return convertView;
 
     }

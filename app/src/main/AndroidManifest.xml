@@ -28,14 +28,16 @@
         </activity>
         <activity
             android:name=".CadernoActivity"
-            android:label="@string/title_cadernoactivity" />
+            android:label="@string/title_cadernoactivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".EscolhaDeFaseActivity"
-            android:label="@string/title_escolhadefase" />
+            android:label="@string/title_escolhadefase"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".Exercicio"
             android:label="@string/title_activity_exercicio"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
