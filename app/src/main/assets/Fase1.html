@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Number X</title>
+</head>
+
+<body>
+    <style>
+        body {
+            background-image: url(grid.png);
+        }
+    </style>
+    
+    <div id="trash-container"></div>
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    <link rel="stylesheet" href="js/katex.css">
+    <script src="js/katex.js"></script>
+    <script src="js/Sortable.js"></script>
+    <script src="js/DragDropTouch.js"></script>
+    <script src="js/Board.js"></script>
+    
+    <script>
+        //Sistema para o Problema 1:
+        var sy = new LinearSystem();
+
+        var eq = new Equation(sy);
+
+        eq.setTerms([new Term(9, "x", 0, 1, eq), new Equality(eq), new Term(27, "x", 0, 0, eq)]);
+
+        sy.setup([eq]);
+        
+    </script>
+    
+</body>
