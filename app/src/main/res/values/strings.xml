@@ -12,7 +12,7 @@
     <string name="saved_toast_dialog">Título alterado com sucesso</string>
     <string name="cancel_option_dialog">Cancelar</string>
     <string name="default_title">Novo cálculo</string>
-    <string name="board_url">file:///android_asset/Board.html</string>
+    <string name="board_url">file:///android_asset/Exemplo.html</string>
     <string name="icon_return">Return</string>
     <string name="title_cadernoactivity">Caderno</string>
     <string name="title_escolhadefase">Escolha de fase</string>

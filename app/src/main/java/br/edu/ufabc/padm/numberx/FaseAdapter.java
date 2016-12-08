@@ -8,22 +8,20 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import br.edu.ufabc.padm.numberx.model.Fase;
-import br.edu.ufabc.padm.numberx.model.FaseDAO;
+import br.edu.ufabc.padm.numberx.model.DAO;
 
 /**
  * Created by lusca on 11/11/16.
  */
 
 public class FaseAdapter extends BaseAdapter {
-    //private DAO.Fase dao;
-    private FaseDAO dao;
+    private DAO.Fase dao;
     private Context context;
 
 
     public FaseAdapter(Context c) {
         this.context = c;
-        //this.dao = DAO.Fase.newInstance();
-        this.dao = FaseDAO.newInstance();
+        this.dao = DAO.Fase.newInstance();
     }
 
     @Override

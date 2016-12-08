@@ -640,8 +640,8 @@ function dropObject(event) {
             var constant = dragObject.value;
             if (constant != 0)
                 event.target.context.multiplyBy(1/constant);
-            event.target.style.backgroundColor = "";
         }
+        event.target.style.backgroundColor = "";
     }
     
     if (event.target.id === "trash")
@@ -651,11 +651,13 @@ function dropObject(event) {
 function onLongPress(event) {
     presstimer = null;
     
+    android.vibrate();
+    
     if (event.stopPropagation) {
         event.stopPropagation(); // stops the browser from redirecting.
     }
     if (event.target.context instanceof Term) {
-        event.target.context.element.style.backgroundColor = "blue";
+        //event.target.context.element.style.backgroundColor = "blue";
         var selectedEquation = event.target.context.equation;
         selectedEquation.system.equationSort(false);
     } else {
@@ -663,20 +665,3 @@ function onLongPress(event) {
     }
     
 }
-
-
-//Dados de teste:
-var sy = new LinearSystem();
-
-var eq = new Equation(sy);
-var eq2 = new Equation(sy);
-var eq3 = new Equation(sy); 
-
-eq.setTerms([new Term(8, "x", 0, 1, eq), new Term(12, "x", 1, 1, eq), new Equality(eq), new Term(3, "x", 1, 0, eq), new Term(2, "x", 1, 0, eq)]);
-eq2.setTerms([new Term(3, "x", 0, 1, eq2), new Term(7,"x", 1, 1, eq2), new Term(2,"x", 0, 1, eq2)]);
-eq3.setTerms([new Term(55, "x", 0, 1, eq3), new Term(9,"x", 2, 1, eq3), new Equality(eq3)]);
-
-sy.setup([eq, eq2, eq3]);
-
-createConstant(1/8);
-createConstant(-5);

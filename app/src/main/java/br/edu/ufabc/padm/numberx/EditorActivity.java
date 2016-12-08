@@ -280,8 +280,11 @@ public class EditorActivity extends AppCompatActivity {
      * Setup the webview to display the math Board, using html/css/js
      */
     private void setupBoard() {
+        BoardInterface boardInterface = new BoardInterface(this);
+
         board = (WebView) findViewById(R.id.Board);
         board.getSettings().setJavaScriptEnabled(true);
+        board.addJavascriptInterface(boardInterface, "android");
         board.loadUrl(getString(R.string.board_url));
         board.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

@@ -7,17 +7,17 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import br.edu.ufabc.padm.numberx.model.ModuloDAO;
+import br.edu.ufabc.padm.numberx.model.DAO;
 import br.edu.ufabc.padm.numberx.model.Modulo;
 
 public class ModuloAdapter extends BaseAdapter {
-    private ModuloDAO dao;
+    private DAO.Modulo dao;
     private Context context;
 
 
     public ModuloAdapter(Context c) {
         this.context = c;
-        this.dao = ModuloDAO.newInstance();
+        this.dao = DAO.Modulo.newInstance();
     }
 
     @Override
